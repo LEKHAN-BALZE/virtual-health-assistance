@@ -1,0 +1,140 @@
+INDEX.HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Assistant Chatbox</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Virtual Assistant</h2>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message">Hi! How can I assist you today?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type a message...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+STYLE.CSS:
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.chat-container {
+    width: 350px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    background: #007bff;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+.chat-box {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.message {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.bot-message {
+    background: #f1f1f1;
+    align-self: flex-start;
+}
+
+.user-message {
+    background: #007bff;
+    color: #fff;
+    align-self: flex-end;
+}
+
+.chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-right: 1px solid #ddd;
+    outline: none;
+}
+
+#send-btn {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#send-btn:hover {
+    background: #0056b3;
+}
+
+SCRIPT.JS :
+// script.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    const sendBtn = document.getElementById('send-btn');
+    const userInput = document.getElementById('user-input');
+    const chatBox = document.getElementById('chat-box');
+
+    // Function to create and append a new message
+    const appendMessage = (message, className) => {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', className);
+        messageElement.textContent = message;
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    };
+
+    // Event listener for the send button
+    sendBtn.addEventListener('click', () => {
+        const message = userInput.value.trim();
+        if (message) {
+            appendMessage(message, 'user-message');
+            userInput.value = '';
+            // Placeholder for bot response
+            setTimeout(() => {
+                appendMessage('I am here to help!', 'bot-message');
+            }, 1000);
+        }
+    });
+
+    // Event listener for Enter key in the input field
+    userInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            sendBtn.click();
+        }
+    });
+});
